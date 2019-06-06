@@ -6,12 +6,25 @@ using System.Text;
 
 namespace EncryptionModule
 {
+    /// <summary>
+    /// Use of Rijndaelmanage as a .NET Standard library
+    /// </summary>
     public abstract class EncryptionBase
     {
         #region Encryption
-        private const int Keysize = 128;
-        private const int DerivationIterations = 1000;
 
+        /// <summary>
+        /// Size of the used key
+        /// </summary>
+        private const int Keysize = 128;
+        /// <summary>
+        /// Amount of iterations for the passphrase
+        /// </summary>
+        private const int DerivationIterations = 1000;
+        //TODO: make editable from config file
+        /// <summary>
+        /// Passphrase for your application
+        /// </summary>
         private const string passPhrase = "HR$2pIjHR$2pIj12";
 
         protected string Encrypt(string plainText)
