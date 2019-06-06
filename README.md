@@ -3,7 +3,7 @@
 
 Currently it is only a wrapper class around the Rijndaelmanaged cryptography.
 
-Example of implementation:
+Useage example:
 ```csharp
 public class Person : EntityBase
 {
@@ -21,4 +21,16 @@ public class Person : EntityBase
 	public string Name { get; set; }
 	public string Email { get; set; }
 }
+```
+
+To actually encrypt the values you just do the following:
+```csharp
+Person person = new Person();
+person.Name = "Kevin";
+person.Email = "test@!?";
+person.Encode(); // Name and email will be encrypted
+
+// Publish to database or something similair?
+
+person.Decode(); // Both values should be themselves again
 ```
