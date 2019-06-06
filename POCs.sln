@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionModule", "EncryptionModule\EncryptionModule.csproj", "{A375D5E5-8409-435A-9519-F2212AA2AC64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionModule.Test", "EncryptionModule.Test\EncryptionModule.Test.csproj", "{13210536-A23B-4C86-BF12-333CEE831833}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A375D5E5-8409-435A-9519-F2212AA2AC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A375D5E5-8409-435A-9519-F2212AA2AC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A375D5E5-8409-435A-9519-F2212AA2AC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A375D5E5-8409-435A-9519-F2212AA2AC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13210536-A23B-4C86-BF12-333CEE831833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13210536-A23B-4C86-BF12-333CEE831833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13210536-A23B-4C86-BF12-333CEE831833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13210536-A23B-4C86-BF12-333CEE831833}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FCA5D4B4-4591-47CB-A445-54E42FF03155}
+	EndGlobalSection
+EndGlobal

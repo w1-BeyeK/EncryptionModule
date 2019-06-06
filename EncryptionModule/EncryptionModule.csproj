@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>CustomEncryptionModule</PackageId>
+    <Authors>Kevin Beye</Authors>
+    <Company>IQS</Company>
+    <RepositoryUrl>https://github.com/w1-BeyeK/EncryptionModule</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/w1-BeyeK/EncryptionModule/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+  </PropertyGroup>
+
+</Project>
