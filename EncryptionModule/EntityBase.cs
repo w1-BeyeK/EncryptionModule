@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EncryptionModule.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -8,20 +9,15 @@ namespace EncryptionModule
     public abstract class EntityBase : EncryptionBase
     {
         protected List<string> protectedValues;
-
-        public EntityBase(List<string> protectedValues)
-        {
-            this.protectedValues = protectedValues;
-        }
-
-        public EntityBase()
-        { }
-
+        
         /// <summary>
         /// Encode object for serialization
         /// </summary>
         public virtual void Encode()
         {
+            if (protectedValues is null || protectedValues.Count < 1)
+                throw new NoPropertiesException("Protected values has no items");
+
             foreach(string value in protectedValues)
             {
                PropertyInfo pi = GetPropertyByName(value);
@@ -34,7 +30,10 @@ namespace EncryptionModule
         /// </summary>
         public virtual void Decode()
         {
-            foreach(string value in protectedValues)
+            if (protectedValues is null || protectedValues.Count < 1)
+                throw new NoPropertiesException("Protected values has no items");
+            
+            foreach (string value in protectedValues)
             {
                 PropertyInfo pi = GetPropertyByName(value);
                 pi.SetValue(this, Decrypt(pi.GetValue(this).ToString()));
@@ -43,7 +42,12 @@ namespace EncryptionModule
 
         private PropertyInfo GetPropertyByName(string name)
         {
-            return GetType().GetProperty(name);
+            PropertyInfo pi = GetType().GetProperty(name);
+
+            if (pi is null)
+                throw new ArgumentNullException(string.Format("Property with name {0} was not found", name));
+            else
+                return pi;
         }
     }
 }

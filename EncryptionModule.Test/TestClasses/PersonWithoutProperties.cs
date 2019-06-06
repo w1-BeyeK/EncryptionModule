@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EncryptionModule.Test
+namespace EncryptionModule.Test.TestClasses
 {
-    public class Person : EntityBase
+    class PersonWithoutProperties : EntityBase
     {
-        public Person() : base()
-        {
-            protectedValues = new List<string>
-            {
-                "Name"
-            };
-        }
+        public PersonWithoutProperties()
+        { }
 
         public long Id { get; set; }
         public string Name { get; set; }
