@@ -7,19 +7,22 @@ namespace EncryptionModule
 {
     public abstract class EntityBase : EncryptionBase
     {
-        protected List<string> ProtectedValues { get; }
+        protected List<string> protectedValues;
 
         public EntityBase(List<string> protectedValues)
         {
-            ProtectedValues = protectedValues;
+            this.protectedValues = protectedValues;
         }
+
+        public EntityBase()
+        { }
 
         /// <summary>
         /// Encode object for serialization
         /// </summary>
         public virtual void Encode()
         {
-            foreach(string value in ProtectedValues)
+            foreach(string value in protectedValues)
             {
                PropertyInfo pi = GetPropertyByName(value);
                pi.SetValue(this, Encrypt(pi.GetValue(this).ToString()));
@@ -31,7 +34,7 @@ namespace EncryptionModule
         /// </summary>
         public virtual void Decode()
         {
-            foreach(string value in ProtectedValues)
+            foreach(string value in protectedValues)
             {
                 PropertyInfo pi = GetPropertyByName(value);
                 pi.SetValue(this, Decrypt(pi.GetValue(this).ToString()));

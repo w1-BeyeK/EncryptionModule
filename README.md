@@ -7,14 +7,15 @@ Useage example:
 ```csharp
 public class Person : EntityBase
 {
-	private List<string> protectedProperties = new List<string>
-	{
-		"Name",
-		"Email"
-	};
-
-	public Person : base(protectedProperties)
-	{ }
+	public Person : base()
+	{ 
+		protectedProperties = new List<string>
+		{
+			// Note that it is NOT casesensitive, as you could use fields/properties together
+			"Name",
+			"Email",
+		};
+	}
 	
 	public long Id { get; set; }
 	

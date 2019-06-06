@@ -6,11 +6,13 @@ namespace EncryptionModule.Test
 {
     public class Person : EntityBase
     {
-        public Person() : base(new List<string>
+        public Person() : base()
         {
-            "Name"
-        })
-        { }
+            protectedValues = new List<string>
+            {
+                "Name"
+            };
+        }
 
         public long Id { get; set; }
         public string Name { get; set; }

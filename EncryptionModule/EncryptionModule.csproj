@@ -9,6 +9,7 @@
     <RepositoryUrl>https://github.com/w1-BeyeK/EncryptionModule</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/w1-BeyeK/EncryptionModule/blob/master/LICENSE</PackageLicenseUrl>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <NeutralLanguage />
   </PropertyGroup>
 
 </Project>
