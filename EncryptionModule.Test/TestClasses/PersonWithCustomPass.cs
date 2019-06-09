@@ -18,10 +18,5 @@ namespace EncryptionModule.Test.TestClasses
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-
-        protected override string GetPassPhrase()
-        {
-            return "123abc";
-        }
     }
 }
