@@ -36,6 +36,7 @@ person.Encode(); // Name and email will be encrypted
 person.Decode(); // Both values should be themselves again
 ```
 
+> Obsolete
 ## To edit the passphrase you can do the following
 
 1. Create a baseclass inheriting EntityBase
@@ -51,5 +52,32 @@ public class BaseClass : EntityBase
 protected override string GetPassPhrase()
 {
 	return "yourpassword"; // or add custom logic to retrieve this from a file
+}
+```
+
+# New in 2.0
+## Custom configuration
+
+As of now you can upload your own configuration with the following properties:
+ * Password
+ * KeySize
+ * BlockSize
+ * Iterations of en- and decoding
+ 
+## How to?
+
+1. Create a baseclass inheriting EntityBase
+```csharp
+public class BaseClass : EntityBase
+{
+	// ...
+}
+```
+
+2. Override the GetConfiguration (parameterless) method
+```csharp
+protected override Configuration GetConfiguration()
+{
+	return Configuration.Standard; // or add some custom logic
 }
 ```
