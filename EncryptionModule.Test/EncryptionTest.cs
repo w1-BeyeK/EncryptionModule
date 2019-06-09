@@ -11,11 +11,13 @@ namespace EncryptionModule.Test
         public void TestSuccess()
         {
             // Arrange
-            Person person = new Person();
-            person.Id = 1;
-            person.Name = "Kevin Beye";
-            person.Email = "kevin.beye1999@hotmail.com";
-            person.Phone = "+31 6 11 06 17 88";
+            Person person = new Person
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
 
             // Act
             person.Encode();
@@ -30,14 +32,16 @@ namespace EncryptionModule.Test
         }
 
         [Fact]
-        public void TestCustomPassSuccess()
+        public void TestCustomConfigSuccess()
         {
             // Arrange
-            PersonWithCustomPass person = new PersonWithCustomPass();
-            person.Id = 1;
-            person.Name = "Kevin Beye";
-            person.Email = "kevin.beye1999@hotmail.com";
-            person.Phone = "+31 6 11 06 17 88";
+            PersonWithCustomConfig person = new PersonWithCustomConfig
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
 
             // Act
             person.Encode();
@@ -49,17 +53,34 @@ namespace EncryptionModule.Test
 
             // Make sure only name is encrypted
             Assert.Equal("kevin.beye1999@hotmail.com", person.Email);
+        }
+
+        [Fact]
+        public void PersonWithNonExistingPropertiesFail()
+        {
+            PersonWithNonExistingProperties person = new PersonWithNonExistingProperties
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
+
+            // Act / assert
+            Assert.Throws<ArgumentNullException>(() => person.Encode());
         }
 
         [Fact]
         public void EncryptWithoutPropertiesThrowsException()
         {
             // Arrange
-            PersonWithoutProperties person = new PersonWithoutProperties();
-            person.Id = 1;
-            person.Name = "Kevin Beye";
-            person.Email = "kevin.beye1999@hotmail.com";
-            person.Phone = "+31 6 11 06 17 88";
+            PersonWithoutProperties person = new PersonWithoutProperties
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
 
             // Act / assert
             Assert.Throws<NoPropertiesException>(() => person.Encode());

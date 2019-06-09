@@ -12,20 +12,10 @@ namespace EncryptionModule
     public abstract class EncryptionBase
     {
         #region Configuration
-
-        /// <summary>
-        /// Configuration object used by encoding/decoding methods
-        /// </summary>
-        private Configuration configuration = Configuration.Standard;
-
-        protected virtual void SetConfiguration(Configuration config)
+                
+        protected virtual Configuration GetConfiguration()
         {
-            configuration = config;
-        }
-
-        protected Configuration GetConfiguration()
-        {
-            return configuration;
+            return Configuration.Standard;
         }
 
         #endregion
@@ -34,9 +24,9 @@ namespace EncryptionModule
 
         protected string Encrypt(string plainText)
         {
-            string passPhrase = configuration.PassPhrase;
+            var config = GetConfiguration();
 
-            if (string.IsNullOrWhiteSpace(passPhrase))
+            if (string.IsNullOrEmpty(config.PassPhrase))
                 throw new ArgumentException("Passphrase cannot be empty.");
 
             // Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
@@ -44,12 +34,12 @@ namespace EncryptionModule
             byte[] saltStringBytes = Generate256BitsOfRandomEntropy();
             byte[] ivStringBytes = Generate256BitsOfRandomEntropy();
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, configuration.DerivationIterations))
+            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(config.PassPhrase, saltStringBytes, config.DerivationIterations))
             {
-                byte[] keyBytes = password.GetBytes(configuration.KeySize / 8);
+                byte[] keyBytes = password.GetBytes(config.KeySize / 8);
                 using (RijndaelManaged symmetricKey = new RijndaelManaged())
                 {
-                    symmetricKey.BlockSize = configuration.BlockSize;
+                    symmetricKey.BlockSize = config.BlockSize;
                     symmetricKey.Mode = CipherMode.CBC;
                     symmetricKey.Padding = PaddingMode.PKCS7;
                     using (ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
@@ -76,27 +66,27 @@ namespace EncryptionModule
 
         protected string Decrypt(string cipherText)
         {
-            string passPhrase = configuration.PassPhrase;
+            var config = GetConfiguration();
 
-            if (string.IsNullOrWhiteSpace(passPhrase))
+            if (string.IsNullOrWhiteSpace(config.PassPhrase))
                 throw new ArgumentException("Passphrase cannot be empty.");
 
             // Get the complete stream of bytes that represent:
             // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
             byte[] cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
             // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
-            byte[] saltStringBytes = cipherTextBytesWithSaltAndIv.Take(configuration.KeySize / 8).ToArray();
+            byte[] saltStringBytes = cipherTextBytesWithSaltAndIv.Take(config.KeySize / 8).ToArray();
             // Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
-            byte[] ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(configuration.KeySize / 8).Take(configuration.KeySize / 8).ToArray();
+            byte[] ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(config.KeySize / 8).Take(config.KeySize / 8).ToArray();
             // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
-            byte[] cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((configuration.KeySize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((configuration.KeySize / 8) * 2)).ToArray();
+            byte[] cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((config.KeySize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((config.KeySize / 8) * 2)).ToArray();
 
-            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, configuration.DerivationIterations))
+            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(config.PassPhrase, saltStringBytes, config.DerivationIterations))
             {
-                var keyBytes = password.GetBytes(configuration.KeySize / 8);
+                var keyBytes = password.GetBytes(config.KeySize / 8);
                 using (RijndaelManaged symmetricKey = new RijndaelManaged())
                 {
-                    symmetricKey.BlockSize = 128;
+                    symmetricKey.BlockSize = config.BlockSize;
                     symmetricKey.Mode = CipherMode.CBC;
                     symmetricKey.Padding = PaddingMode.PKCS7;
                     using (ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))

@@ -13,11 +13,13 @@ namespace EncryptionModule.Test
         public void DecryptSuccess()
         {
             // Arrange
-            Person person = new Person();
-            person.Id = 1;
-            person.Name = "Kevin Beye";
-            person.Email = "kevin.beye1999@hotmail.com";
-            person.Phone = "+31 6 11 06 17 88";
+            Person person = new Person
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
 
             // Act
             person.Encode();
@@ -33,14 +35,16 @@ namespace EncryptionModule.Test
         }
 
         [Fact]
-        public void DecryptWithCustomPassSuccess()
+        public void DecryptWithCustomConfigSuccess()
         {
             // Arrange
-            PersonWithCustomPass person = new PersonWithCustomPass();
-            person.Id = 1;
-            person.Name = "Kevin Beye";
-            person.Email = "kevin.beye1999@hotmail.com";
-            person.Phone = "+31 6 11 06 17 88";
+            PersonWithCustomConfig person = new PersonWithCustomConfig
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
 
             // Act
             person.Encode();
@@ -53,18 +57,37 @@ namespace EncryptionModule.Test
 
             // Make sure only name is encrypted
             Assert.Equal("kevin.beye1999@hotmail.com", person.Email);
+        }
+
+        [Fact]
+        public void DecryptWithoutPasswordFail()
+        {
+            // Arrange
+            PersonWithoutPassword person = new PersonWithoutPassword
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
+
+            // Act / Assert
+            Assert.Throws<ArgumentException>(() => person.Encode());
+            Assert.Throws<ArgumentException>(() => person.Decode());
         }
 
         [Fact]
         public void DecryptWithoutPropertiesThrowsException()
         {
             // Arrange
-            PersonWithoutProperties person = new PersonWithoutProperties();
-            person.Id = 1;
-            person.Name = "Kevin Beye";
-            person.Email = "kevin.beye1999@hotmail.com";
-            person.Phone = "+31 6 11 06 17 88";
-            
+            PersonWithoutProperties person = new PersonWithoutProperties
+            {
+                Id = 1,
+                Name = "Kevin Beye",
+                Email = "kevin.beye1999@hotmail.com",
+                Phone = "+31 6 11 06 17 88"
+            };
+
             // Act / assert
             Assert.Throws<NoPropertiesException>(() => person.Decode());
         }
