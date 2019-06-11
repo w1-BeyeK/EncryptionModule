@@ -39,25 +39,6 @@ person.Encode(); // Name and email will be encrypted
 person.Decode(); // Both values should be themselves again
 ```
 
-> Obsolete
-## To edit the passphrase you can do the following
-
-1. Create a baseclass inheriting EntityBase
-```csharp
-public class BaseClass : EntityBase
-{
-	// ...
-}
-```
-
-2. Override the following method: 'GetPassPhrase'
-```csharp
-protected override string GetPassPhrase()
-{
-	return "yourpassword"; // or add custom logic to retrieve this from a file
-}
-```
-
 # New in 2.0
 ## Custom configuration
 
