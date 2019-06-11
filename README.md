@@ -3,6 +3,9 @@
 
 Currently it is only a wrapper class around the Rijndaelmanaged cryptography.
 
+## I would like to have your feedback
+So in case you have any, or want to request new features - if enough request them I will add them shortly - fill in [this](https://docs.google.com/forms/d/e/1FAIpQLScEEG5srRuAewsxFCKtZKA5JK2-lAhf3UAYOMaHc9LkDKxGiA/viewform?usp=sf_link) form.
+
 Useage example:
 ```csharp
 public class Person : EntityBase
